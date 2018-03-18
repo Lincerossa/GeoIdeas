@@ -3,7 +3,7 @@ import admin from '../../../firebase'
 export const LOGIN = 'LOGIN'
 
 
-const actionUsername = (username, userAlreadyRegistered = false) => ({
+const actionUsername = ({ username, userAlreadyRegistered = false }) => ({
   type: LOGIN,
   login: {
     username,
@@ -13,10 +13,19 @@ const actionUsername = (username, userAlreadyRegistered = false) => ({
 })
 
 
-const getUsers = () => {
+const getDatabaseLoginReference = typeOfUser => {
   const db = admin.database();
-  return db.ref("login/users")
+  return db.ref(`login/${typeOfUser}`)
 }
+
+
+const setUserAsGuest = (username) => {
+  const users = getDatabaseLoginReference('guests');
+  users.update({
+    [username]: '',
+  })
+}
+
 
 const findElementInObjectList = (obj,elementToFind) => (
   Object.keys(obj).find(e => e === elementToFind) !== undefined
@@ -25,7 +34,7 @@ const findElementInObjectList = (obj,elementToFind) => (
 
 export function handleLogin(username) {
   return (dispatch) => {
-    getUsers()
+    getDatabaseLoginReference('users')
       .on('value', (snapshot) => {
        
         const users = snapshot.val()
@@ -33,18 +42,23 @@ export function handleLogin(username) {
         const userAlreadyRegistered = findElementInObjectList(users, username)
         
         if (userAlreadyRegistered) {
-          const action = actionUsername(username, true);
+          const action = actionUsername({ username, userAlreadyRegistered: true });
           dispatch(action)
           return false
         }
-
-        const action = actionUsername(username, false);
-        dispatch(action)
         
-      }, function (errorObject) {
+        setUserAsGuest(username)
+        const action = actionUsername({ username, userAlreadyRegistered: false });
+        dispatch(action)
 
+        // qui va avanti
+
+
+        
+      }, (errorObject) => {
         console.log("The read failed: " + errorObject.code);
-
+        const action = actionUsername({ username: null, userAlreadyRegistered: false });
+        dispatch(action)
       });
   };
 }
