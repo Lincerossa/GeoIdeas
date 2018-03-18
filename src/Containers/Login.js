@@ -1,10 +1,10 @@
 import React,  { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import * as actions from '../Redux/Actions/handleLogin'
+import { withRouter } from 'react-router-dom'
 
-
+import Input from '../Components/Input'
 
 class Login extends Component {
 
@@ -38,6 +38,15 @@ class Login extends Component {
   }
 
   
+  componentWillReceiveProps(nextProps) {
+    const { login } = nextProps
+    const { history } = this.props
+    if (login && login.userChecked && !login.userAlreadyRegistered ) {
+      history.push('/test')
+      return false
+    }
+
+  }  
   render() {
 
     const { login } = this.props
@@ -47,14 +56,16 @@ class Login extends Component {
 
       <Container>
         <Form onSubmit={(e) => this.handleSubmit(e)}>
-          <Input type="text" value={value} onChange={e => this.handleChange(e.target.value)}   />
-          <input type="submit" />
+          <Input 
+            type="text" 
+            value={value} 
+            label="Inserisci il tuo username"
+            handleChange={this.handleChange}
+          />
           {
-            login.userAlreadyRegistered && login.userChecked && <p>utente già registrato. lo blocco e gli chiedo password</p>
-          }
-          {
-            !login.userAlreadyRegistered && login.userChecked &&
-            <Link to="/test">vai avanti</Link>
+            login.userAlreadyRegistered && 
+            login.userChecked && 
+            <p>utente già registrato. lo blocco e gli chiedo password</p>
           }
         </Form>
       </Container>
@@ -70,12 +81,13 @@ const Container = styled.div`
   display: flex;
   height: 100vh;
   align-items: center;
+  justify-content: center;
 `
 
 const Form = styled.form`
+  width: 100%;
 `
-const Input = styled.input`
-`
+
 
 const mapStateToProps = (state) => ({
   login: state.login
@@ -84,4 +96,4 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   actions,
-)(Login)
+)(withRouter(Login))
