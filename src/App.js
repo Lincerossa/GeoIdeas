@@ -14,7 +14,7 @@ import withLayout from './hoc/withLayout'
 const App = () => (
   <Switch>
     <Route exact path='/' component={Login} />
-    <Route path='/test' component={withLayout(GeoPosition)} />
+    <Route path='/map' component={withLayout(GeoPosition)} />
   </Switch>
 )
 

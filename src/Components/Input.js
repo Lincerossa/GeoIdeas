@@ -52,21 +52,20 @@ class Input extends Component {
 
 const Wrapper = styled.div`
   position: relative;
+  display: inline-block;
+  background-color: white;
 `
 
 const Label = styled.label`
   pointer-events: none;
   position: absolute;
-  top: 0;
   left: 1rem;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
+  top: ${props => props.isActive ? '0' :'50%'};
+  transform: translate(0,-50%);
   font-size: ${props => props.isActive ? ' .75rem' : '1rem'};
   text-transform: uppercase;
-  transform: ${props => props.isActive ? 'translate(0,-50%)' : 'none'};
   transition: all .2s;
+  background-color: inherit;
 `
 
 const InputField = styled.input`

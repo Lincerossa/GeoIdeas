@@ -3,11 +3,17 @@ const path = require('path');
 
 const layout = `
   <!DOCTYPE html>
-    <html>
-      <head>
+  <html>
+    <head>
       <title>GeoIdeas</title>
-      </head>
-      <body>
+      <meta charset="utf-8"/>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+      <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+      <meta name="author"  content="GeoIdeas" />
+      <meta name="robots" content="follow"/>
+      <meta name="revisit-after" content="1 weeks" />
+    </head>
+    <body>
       <div id="root"></div>
       <script src='/index.js' type='text/javascript'></script>
     </body>
@@ -25,5 +31,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
+  console.log('Example app listening on port 3000! si');
 })

@@ -42,9 +42,11 @@ class Login extends Component {
     const { login } = nextProps
     const { history } = this.props
     if (login && login.userChecked && !login.userAlreadyRegistered ) {
-      history.push('/test')
+      history.push('/map')
       return false
-    }
+    } 
+
+
 
   }  
   render() {
@@ -58,15 +60,10 @@ class Login extends Component {
         <Form onSubmit={(e) => this.handleSubmit(e)}>
           <Input 
             type="text" 
-            value={value} 
+            value={value}
             label="Inserisci il tuo username"
             handleChange={this.handleChange}
           />
-          {
-            login.userAlreadyRegistered && 
-            login.userChecked && 
-            <p>utente già registrato. lo blocco e gli chiedo password</p>
-          }
         </Form>
       </Container>
 
@@ -86,6 +83,8 @@ const Container = styled.div`
 
 const Form = styled.form`
   width: 100%;
+  text-align: center;
+  display: inline-block;
 `
 
 
