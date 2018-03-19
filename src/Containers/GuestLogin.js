@@ -1,12 +1,12 @@
 import React,  { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import * as actions from '../Redux/Actions/handleLogin'
+import * as actions from '../Redux/Actions/handleGuestLogin'
 import { withRouter } from 'react-router-dom'
 
 import Input from '../Components/Input'
 
-class Login extends Component {
+class GuestLogin extends Component {
 
   constructor(props) {
     super(props)
@@ -22,11 +22,11 @@ class Login extends Component {
   handleSubmit(e){
     e.preventDefault()
 
-    const { handleLogin } = this.props
+    const { handleGuestLogin } = this.props
     const { value } = this.state
 
     if(value) {
-      handleLogin(value)
+      handleGuestLogin(value)
     }
 
   }
@@ -41,21 +41,16 @@ class Login extends Component {
   componentWillReceiveProps(nextProps) {
     const { login } = nextProps
     const { history } = this.props
-    if (login && login.userChecked && !login.userAlreadyRegistered ) {
+    if (login && login.userChecked && login.isGuest && !login.guestNameAlreadyTaken ) {
       history.push('/map')
       return false
     } 
-
-
-
   }  
   render() {
-
+    
     const { login } = this.props
     const { value } = this.state
     return(
-
-
       <Container>
         <Form onSubmit={(e) => this.handleSubmit(e)}>
           <Input 
@@ -65,13 +60,17 @@ class Login extends Component {
             handleChange={this.handleChange}
           />
         </Form>
+        {
+          login.userChecked && 
+          login.guestNameAlreadyTaken && <p> guest già preso </p>
+        }
+        {
+          login.userChecked &&
+          !login.isGuest && <p> già registrato </p>
+        }
       </Container>
-
-
     )
-  
   }
-
 }
 
 const Container = styled.div`
@@ -95,4 +94,4 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   actions,
-)(withRouter(Login))
+)(withRouter(GuestLogin))
