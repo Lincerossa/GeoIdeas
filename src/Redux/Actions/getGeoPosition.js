@@ -26,17 +26,17 @@ const askForGeoPosition = () => {
 
 export function getGeoPosition() {
   return (dispatch) => {
-    const action = loadingGeoPosition({ lat: null, lon: null, loading: true })
+    const action = loadingGeoPosition({ lat: null, lng: null, loading: true })
     dispatch(action)
     askForGeoPosition()
       .then((position) => {
         const { coords } = position;
-        const { latitude: lat, longitude: lon } = coords;
-        const action = geoPosition({ lat, lon, err: false, loading: false })
+        const { latitude: lat, longitude: lng } = coords;
+        const action = geoPosition({ lat, lng, err: false, loading: false })
         dispatch(action)
       })
       .catch(() => {
-        const action = denyGeoPosition({ lat: null, lon: null, err: true, loading: false })
+        const action = denyGeoPosition({ lat: null, lng: null, err: true, loading: false })
         dispatch(action)
       })
   };

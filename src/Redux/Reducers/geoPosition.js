@@ -2,7 +2,7 @@ import { GET_GEOPOSITION, DENY_GEOPOSITION, LOADING_GEOPOSITION } from '../Actio
 
 const initialState = {
   lat: null,
-  lon: null,
+  lng: null,
 }
 
 export default (state = initialState, action) => {
