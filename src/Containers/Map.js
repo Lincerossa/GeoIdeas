@@ -45,7 +45,7 @@ class Map extends Component {
       }
 
     return (
-      <React.Fragment>
+      <Container>
 
         <MapContainer>
           <GoogleMap center={center} />
@@ -60,24 +60,24 @@ class Map extends Component {
         {
           <ModalOverlay showModal={showModal} closeModal={this.handleToggleSidebar} >
             <OverlayHeader>qui header</OverlayHeader>
-            <GeoPosition label="Geolocalizzami" />
+
+            <ButtonsGroup>
+              <GeoPosition label="Geolocalizzami" />
+              <Button onClick={this.handleToggleSidebar}>chiudi </Button>
+            </ButtonsGroup>
           </ModalOverlay>
         }
 
-      </React.Fragment>
+      </Container>
     )
   }
 
 }
 
-
-
-
-
-
-const Err = styled.div`
-  color: red;
+const Container = styled.div`
+  display: flex;
 `
+
 
 const ButtonContainer = styled.div`
   position: fixed;
@@ -85,26 +85,26 @@ const ButtonContainer = styled.div`
   left: 0;
   padding: 0 3rem;
   bottom: 0;
-  text-align: center;
-`
-const Sidebar = styled.div`
-  position: fixed;
-  right: 0;
-  width: 300px;
-  top: 0;
-  bottom: 0;
-  background-color: white;
-  transition: all .3s;
-  transform: ${props => props.showModal ? 'transalate(0,0)' : 'translate(100%,0)'};
+  height: 120px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 `
 
+
 const OverlayHeader = styled.div`
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid lightGrey;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
 `
 
 const MapContainer = styled.div`
-  height: 400px;
-  border: 1px solid red;
+  width: 100%;
+  height: calc(100vh - 60px - 120px);
+`
+
+const ButtonsGroup = styled.div`
+  display: flex;
 `
 
 const mapStateToProps = (state) => ({
