@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { compose, withProps } from 'recompose'
-import { withGoogleMap, withScriptjs, GoogleMap, Marker } from "react-google-maps"
+
+import GoogleMap from '../Components/GoogleMap'
+
 import GeoPosition from './GeoPosition'
 import Button from '../Components/Button'
 import ModalOverlay from '../Components/ModalOverlay'
 
 import * as actions from "../Redux/Actions/getGeoPosition";
 
+
 class Map extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       showModal: false,
@@ -31,26 +33,24 @@ class Map extends Component {
     const { geoPosition } = this.props
 
     const center = (geoPosition.lat && geoPosition.lng && !geoPosition.loading)
-      ? 
-        {
-          lat: geoPosition.lat,
-          lng: geoPosition.lng,
-        }
-      : 
-        {
-          lat: -45.480709,
-          lng: 9.2030196, 
-        }
+      ?
+      {
+        lat: geoPosition.lat,
+        lng: geoPosition.lng,
+      }
+      :
+      {
+        lat: 45.480709,
+        lng: 9.2030196,
+      }
 
     return (
       <React.Fragment>
-        <GoogleMap
-          defaultZoom={8}
-          center={center}
-          defaultCenter={center}
-        >
-          <Marker position={center} />
-        </GoogleMap>
+
+        <MapContainer>
+          <GoogleMap center={center} />
+        </MapContainer>
+
         <ButtonContainer>
           <Button
             onClick={this.handleToggleSidebar}
@@ -60,12 +60,10 @@ class Map extends Component {
         {
           <ModalOverlay showModal={showModal} closeModal={this.handleToggleSidebar} >
             <OverlayHeader>qui header</OverlayHeader>
-            <GeoPosition 
-              label="Geolocalizzami"
-            />
+            <GeoPosition label="Geolocalizzami" />
           </ModalOverlay>
         }
-        
+
       </React.Fragment>
     )
   }
@@ -73,9 +71,8 @@ class Map extends Component {
 }
 
 
-const mapStateToProps = (state) => ({
-  geoPosition: state.geoPosition,
-})
+
+
 
 
 const Err = styled.div`
@@ -105,20 +102,18 @@ const OverlayHeader = styled.div`
   border-bottom: 1px solid grey;
 `
 
-const mapIncredibile = compose(
-  withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
-    loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `400px` }} />,
-    mapElement: <div style={{ height: `100%` }} />,
-  }),
-  withScriptjs,
-  withGoogleMap
-)(Map)
+const MapContainer = styled.div`
+  height: 400px;
+  border: 1px solid red;
+`
+
+const mapStateToProps = (state) => ({
+  geoPosition: state.geoPosition,
+})
 
 
 
 export default connect(
   mapStateToProps,
   actions,
-)(mapIncredibile)
+)(Map)
