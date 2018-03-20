@@ -35,7 +35,7 @@ class Input extends Component {
     return(
       <Wrapper>
         {label && <Label
-          isActive={isActive}
+          isActive={isActive || value.length}
         >{label}</Label>}
         <InputField
           onFocus={ this.handleFocus }
@@ -52,7 +52,6 @@ class Input extends Component {
 
 const Wrapper = styled.div`
   position: relative;
-  display: inline-block;
   background-color: white;
 `
 

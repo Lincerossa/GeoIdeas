@@ -6,14 +6,15 @@ import * as actions from "../Redux/Actions/getGeoPosition";
 import Loading from '../Components/Loading'
 import Button from '../Components/Button'
 
-const GeoPosition = ({ geoPosition, getGeoPosition, label }) => {
+const GeoPosition = ({ geoPosition, getGeoPosition, children }) => {
 
   const { lat, lon, err, loading } = geoPosition
 
   return (
     <React.Fragment>
-      <Button onClick={getGeoPosition}>{label}
-      </Button>
+      {children({
+        getGeoPosition,
+      })}
 
       {err && <Err>Hai bloccato la geolocalizzazione</Err>}
       {loading && <Loading>loading</Loading>}

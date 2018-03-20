@@ -17,11 +17,14 @@ class Map extends Component {
     super(props)
     this.state = {
       showModal: false,
+      localita: '',
     }
     this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
     this.handleLocalitaChange = this.handleLocalitaChange.bind(this)
+    this.getAddressFromLatLng = this.getAddressFromLatLng.bind(this)
   }
+  
 
   handleToggleSidebar() {
     this.setState({
@@ -33,38 +36,54 @@ class Map extends Component {
     console.log("handleFormSubmit")
   }
 
+  getAddressFromLatLng({lat, lng}) {
+    var geocoder = new google.maps.Geocoder()
+    var location = new google.maps.LatLng(lat, lng)      
+    geocoder.geocode({ 'latLng': location }, (results, status) => {
+      if (status == google.maps.GeocoderStatus.OK) {
+        this.setState({
+          localita: results[0].formatted_address
+        })
+        return 
+      }
+    })
+  }
+
   handleLocalitaChange(value) {
     this.setState({
       localita: value
     })
   }
 
+  componentWillReceiveProps(nextProps) {
+
+    const { geoPosition } = nextProps
+
+    if ((geoPosition.lat && geoPosition.lng && !geoPosition.loading)) {
+      const { lat, lng } = geoPosition
+
+      this.getAddressFromLatLng({
+        lat: parseFloat(lat.toFixed(2)),
+        lng: parseFloat(lng.toFixed(2)) 
+      })
+    }
+  }
+
   render() {
 
-    const { showModal } = this.state
+    const { showModal, localita } = this.state
     const { geoPosition } = this.props
 
-    const center = (geoPosition.lat && geoPosition.lng && !geoPosition.loading)
-      ?
-      {
-        lat: geoPosition.lat,
-        lng: geoPosition.lng,
-      }
-      :
-      {
-        lat: 45.480709,
-        lng: 9.2030196,
-      }
+    const geoPositionRetrieved = (geoPosition.lat && geoPosition.lng && !geoPosition.loading)
 
-    const localita = this.state.localita || 
-      (geoPosition && geoPosition.lat && geoPosition.lng && `${geoPosition.lat}, ${geoPosition.lng}`) || ''
+    const lat = geoPositionRetrieved ? geoPosition.lat : 45.480709
+    const lng = geoPositionRetrieved ? geoPosition.lng : 9.2030196
 
-    
     return (
       <Container>
 
         <MapContainer>
-          <GoogleMap center={center} />
+          <GoogleMap center={{ lat, lng }} />
         </MapContainer>
 
         <ButtonContainer>
@@ -80,27 +99,25 @@ class Map extends Component {
             <FormContainer>
               <Form onSubmit={this.handleFormSubmit}>
 
-
-                <Input
-                  type="text"
-                  label="località"
-                  handleChange={this.handleLocalitaChange}
-                  value={localita}
-                />
+                <FieldWrapper>
+                  <Input
+                    type="text"
+                    label="località"
+                    handleChange={this.handleLocalitaChange}
+                    value={localita}
+                  />
+                  <GeoPosition>
+                    {({ getGeoPosition }) => (
+                      <IconWrapper onClick={getGeoPosition}>
+                        <div className="material-icons">location_city</div>
+                      </IconWrapper>
+                    )}
+                  </GeoPosition>
+                </FieldWrapper>
 
               </Form>
             </FormContainer>
-
-
-
-
-
-
-            <ButtonContainer>
-              <GeoPosition
-                label="Geolocalizzami" 
-              />
-            </ButtonContainer>
+            
           </ModalOverlay>
         }
 
@@ -116,11 +133,22 @@ const Container = styled.div`
 
 
 const FormContainer = styled.div`
-  border: 1px solid grey;
+  margin: 1rem 0;
 `
 
 const Form = styled.form`
+`
 
+const FieldWrapper = styled.div`
+  border-bottom: 1px solid grey;
+  margin-bottom: .5rem;
+  padding-bottom: .5rem;
+  display: flex;
+`
+
+
+const IconWrapper = styled.div`
+  cursor: pointer;
 `
 
 const ButtonContainer = styled.div`

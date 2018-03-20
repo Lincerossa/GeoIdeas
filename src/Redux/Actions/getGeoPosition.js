@@ -20,16 +20,20 @@ const loadingGeoPosition = (position) => ({
 
 
 const askForGeoPosition = () => {
+  console.log("prosegue qui")
   return new Promise((resolve, reject) =>
     navigator.geolocation.getCurrentPosition(resolve, reject))
 }
 
 export function getGeoPosition() {
+  console.log("inizia qui")
   return (dispatch) => {
     const action = loadingGeoPosition({ lat: null, lng: null, loading: true })
     dispatch(action)
     askForGeoPosition()
       .then((position) => {
+        console.log("nel then")
+        
         const { coords } = position;
         const { latitude: lat, longitude: lng } = coords;
         const action = geoPosition({ lat, lng, err: false, loading: false })
