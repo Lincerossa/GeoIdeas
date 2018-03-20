@@ -15,40 +15,26 @@ class Map extends Component {
     super(props)
     this.state = {
       showModal: false,
-      geoPosition: props.geoPosition,
     }
     this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
   }
 
-  componentWillReceiveProps(nextProps){
-    const { geoPosition } = nextProps
-    if (geoPosition !== this.state.geoPosition) {
-      this.setState({
-        geoPosition,
-      })
-    }
-  }
-
   handleToggleSidebar() {
-
     this.setState({
       showModal: !this.state.showModal,
     })
-
   }
 
   render() {
 
-    const {
-      geoPosition, 
-      showModal 
-    } = this.state
+    const { showModal } = this.state
+    const { geoPosition } = this.props
 
-    const center = (geoPosition.lat && geoPosition.lon && !geoPosition.loading)
+    const center = (geoPosition.lat && geoPosition.lng && !geoPosition.loading)
       ? 
         {
           lat: geoPosition.lat,
-          lng: geoPosition.lon,
+          lng: geoPosition.lng,
         }
       : 
         {
@@ -56,13 +42,6 @@ class Map extends Component {
           lng: 9.2030196, 
         }
 
-
-
-    
-    
-    
-    
-    
     return (
       <React.Fragment>
         <GoogleMap
@@ -70,10 +49,10 @@ class Map extends Component {
           center={center}
           defaultCenter={center}
         >
-          <Marker position={{ lat: geoPosition.lat || -335, lng: geoPosition.lon || 150 }} />
+          <Marker position={center} />
         </GoogleMap>
         <ButtonContainer>
-          <Button 
+          <Button
             onClick={this.handleToggleSidebar}
           >Inserisci un nuovo commento</Button>
         </ButtonContainer>
