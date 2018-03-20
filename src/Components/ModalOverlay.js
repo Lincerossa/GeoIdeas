@@ -40,23 +40,8 @@ class ModalOverlay extends Component {
     this.state={
       centerModal: null
     }
-    this.handleModalContentRef = this.handleModalContentRef.bind(this)
   }
   
-  handleModalContentRef(el) {
-    console.log("el",el)
-    if (!el) {
-      
-      const centerModal = window.innerHeight > el.getBoundingClientRect().height
-
-      // this.setState(
-      //   {
-      //     centerModal,
-      //   },
-      //   () => (el.parentNode.scrollTop = 0)
-      // )
-    }
-  }
 
   render(){
     
@@ -72,14 +57,12 @@ class ModalOverlay extends Component {
           style={modalStyle}
           backdropStyle={backdropStyle}
           contentLabel={contentLabel}
+          style={{ overlay: { zIndex: 1 } }}
         >
           <ModalContent
             centerModal={centerModal}
-            innerRef={el => handleModalContentRef(el)}
           >
             {children}
-            <div style={{height: '200vh'}}>asdasd</div>
-            <Button onClick={closeModal}>chiudi </Button>
           </ModalContent>
         </Modal>
       </div>
