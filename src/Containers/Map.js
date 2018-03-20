@@ -61,8 +61,18 @@ class Map extends Component {
           <ModalOverlay showModal={showModal} closeModal={this.handleToggleSidebar} >
             <OverlayHeader>qui header</OverlayHeader>
 
+            <p>testone </p>
+            <p>testone </p>
+            <p>testone </p>
+            <p>testone </p>
+            <p>testone </p>
+            <p>testone </p>
+            <p>testone </p>
+
             <ButtonsGroup>
-              <GeoPosition label="Geolocalizzami" />
+              <GeoPosition
+                label="Geolocalizzami" 
+              />
               <Button onClick={this.handleToggleSidebar}>chiudi </Button>
             </ButtonsGroup>
           </ModalOverlay>
@@ -104,7 +114,6 @@ const MapContainer = styled.div`
 `
 
 const ButtonsGroup = styled.div`
-  display: flex;
 `
 
 const mapStateToProps = (state) => ({

@@ -21,6 +21,8 @@ const GeoPosition = ({ geoPosition, getGeoPosition, label }) => {
   )
 }
 
+
+
 const mapStateToProps = (state) => ({
   geoPosition: state.geoPosition,
 })
