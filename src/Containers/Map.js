@@ -9,7 +9,7 @@ import Button from '../Components/Button'
 import ModalOverlay from '../Components/ModalOverlay'
 
 import * as actions from "../Redux/Actions/getGeoPosition";
-
+import Input from '../Components/Input'
 
 class Map extends Component {
 
@@ -19,11 +19,23 @@ class Map extends Component {
       showModal: false,
     }
     this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
+    this.handleFormSubmit = this.handleFormSubmit.bind(this)
+    this.handleLocalitaChange = this.handleLocalitaChange.bind(this)
   }
 
   handleToggleSidebar() {
     this.setState({
       showModal: !this.state.showModal,
+    })
+  }
+
+  handleFormSubmit(){
+    console.log("handleFormSubmit")
+  }
+
+  handleLocalitaChange(value) {
+    this.setState({
+      localita: value
     })
   }
 
@@ -44,6 +56,10 @@ class Map extends Component {
         lng: 9.2030196,
       }
 
+    const localita = this.state.localita || 
+      (geoPosition && geoPosition.lat && geoPosition.lng && `${geoPosition.lat}, ${geoPosition.lng}`) || ''
+
+    
     return (
       <Container>
 
@@ -59,22 +75,32 @@ class Map extends Component {
 
         {
           <ModalOverlay showModal={showModal} closeModal={this.handleToggleSidebar} >
-            <OverlayHeader>qui header</OverlayHeader>
+            <OverlayHeader>Sezione inserimento</OverlayHeader>
 
-            <p>testone </p>
-            <p>testone </p>
-            <p>testone </p>
-            <p>testone </p>
-            <p>testone </p>
-            <p>testone </p>
-            <p>testone </p>
+            <FormContainer>
+              <Form onSubmit={this.handleFormSubmit}>
 
-            <ButtonsGroup>
+
+                <Input
+                  type="text"
+                  label="località"
+                  handleChange={this.handleLocalitaChange}
+                  value={localita}
+                />
+
+              </Form>
+            </FormContainer>
+
+
+
+
+
+
+            <ButtonContainer>
               <GeoPosition
                 label="Geolocalizzami" 
               />
-              <Button onClick={this.handleToggleSidebar}>chiudi </Button>
-            </ButtonsGroup>
+            </ButtonContainer>
           </ModalOverlay>
         }
 
@@ -88,6 +114,14 @@ const Container = styled.div`
   display: flex;
 `
 
+
+const FormContainer = styled.div`
+  border: 1px solid grey;
+`
+
+const Form = styled.form`
+
+`
 
 const ButtonContainer = styled.div`
   position: fixed;
@@ -104,8 +138,11 @@ const ButtonContainer = styled.div`
 
 const OverlayHeader = styled.div`
   border-bottom: 1px solid lightGrey;
-  padding: 1rem 0;
-  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: .5rem 0;
+  text-transform: uppercase;
+  letter-spacing: .1em;
 `
 
 const MapContainer = styled.div`
@@ -113,8 +150,6 @@ const MapContainer = styled.div`
   height: calc(100vh - 60px - 120px);
 `
 
-const ButtonsGroup = styled.div`
-`
 
 const mapStateToProps = (state) => ({
   geoPosition: state.geoPosition,
