@@ -2,7 +2,6 @@ import React,  { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import * as actions from '../Redux/Actions/handleGuestLogin'
-import { withRouter } from 'react-router-dom'
 
 import Input from '../Components/Input'
 
@@ -42,7 +41,7 @@ class GuestLogin extends Component {
     const { login } = nextProps
     const { history } = this.props
     if (login && login.userChecked && login.isGuest && !login.guestNameAlreadyTaken ) {
-      history.push('/map')
+      history.push('/inserimentoDatabase')
       return false
     } 
   }  
@@ -94,4 +93,4 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   actions,
-)(withRouter(GuestLogin))
+)(GuestLogin)

@@ -1,54 +1,24 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 import * as actions from "../Redux/Actions/getGeoPosition";
-import geolib from 'geolib'
 import Loading from '../Components/Loading'
 import Button from '../Components/Button'
 
-class GeoPosition extends Component {
+const GeoPosition = ({ geoPosition, getGeoPosition, label }) => {
 
-  constructor(props) {
-    super(props)
-    this.calculateDistanceFromGravedona = this.calculateDistanceFromGravedona.bind(this)
-  }
+  const { lat, lon, err, loading } = geoPosition
 
-  calculateDistanceFromGravedona(geoPosition) {
-    if (!(geoPosition.lat && geoPosition.lon)) return null
-    const distance = geolib.getDistance(
-      { latitude: geoPosition.lat, longitude: geoPosition.lon },
-      { latitude: "46.153605", longitude: "9.295829" }
-    );
+  return (
+    <React.Fragment>
+      <Button onClick={getGeoPosition}>{label}
+      </Button>
 
-    return distance / 1000
-  }
-
-  render() {
-
-    const { geoPosition, getGeoPosition } = this.props
-
-    const { lat, lon, err, loading } = geoPosition
-
-    return (
-      <React.Fragment>
-        {
-          !loading && !lat && !lon &&
-          <Button onClick={getGeoPosition}>
-            per iniziare clicca qui
-          </Button>
-        }
-        {
-          lat && lon && !err &&
-          <p>{this.calculateDistanceFromGravedona(geoPosition)} km da Gravedona</p>
-        }
-
-        {err && <Err>Hai bloccato la geolocalizzazione</Err>}
-        {loading && <Loading>loading</Loading>}
-      </React.Fragment>
-    )
-  }
-
+      {err && <Err>Hai bloccato la geolocalizzazione</Err>}
+      {loading && <Loading>loading</Loading>}
+    </React.Fragment>
+  )
 }
 
 const mapStateToProps = (state) => ({
@@ -58,7 +28,6 @@ const mapStateToProps = (state) => ({
 const Err = styled.div`
   color: red;
 `
-
 
 export default connect(
   mapStateToProps,
