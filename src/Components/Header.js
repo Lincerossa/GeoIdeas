@@ -11,13 +11,13 @@ const handleRouteChange = ({ history, url }) => {
 const Header = (props) => (
   <Container>
     <LoginWrapper>
+
       <BackHome onClick={() => handleRouteChange({ history: props.history, url: '/' })}>
         Home
       </BackHome>
 
-
       <Logo onClick={() => handleRouteChange({ history: props.history, url: '/guestlogin' })}>
-      Login
+        Login
       </Logo>
     </LoginWrapper>
   </Container>
@@ -28,6 +28,12 @@ const Container = styled.div`
   border: 1px solid grey;
   margin: 0;
   display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: lightgray;
 `
 
 const LoginWrapper = styled.div`

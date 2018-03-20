@@ -10,7 +10,9 @@ import Header from './Header'
 const Layout = (props) => (
   <Container>
     <Header />
-    {props.children}
+    <Content>
+      {props.children}
+    </Content>
   </Container>
 )
 
@@ -20,5 +22,8 @@ const Container = styled.div`
   min-height: 100vh;
 `
 
+const Content = styled.div`
+  padding-top: 60px;
+`
 
 export default Layout
