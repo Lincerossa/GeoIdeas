@@ -11,15 +11,12 @@ const Button = ({ onClick, children }) => (
 
 
 
-
-
-
 const Wrapper = styled.button`
   outline: none;
   -webkit-appearance: none;
   border: none;
   font-size: 1rem;
-  padding: 2rem;
+  padding: 1rem;
   margin: 0;
   line-height: 1;
   text-transform: uppercase;
