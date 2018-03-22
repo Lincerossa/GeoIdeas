@@ -22,7 +22,7 @@ class Map extends Component {
     }
     this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
-    this.handleaddressChange = this.handleaddressChange.bind(this)
+    this.handleAddressChange = this.handleAddressChange.bind(this)
   }
   
 
@@ -33,26 +33,25 @@ class Map extends Component {
   }
 
   handleFormSubmit(){
-    console.log("handleFormSubmit")
+    
+    
   }
 
 
-  handleaddressChange(value) {
+  handleAddressChange(value) {
     this.setState({
       address: value
     })
   }
-  
+
 
   render() {
 
     const { showModal, } = this.state
-    const { geoPosition } = this.props
+    const { geoPosition, markers } = this.props
 
     const address = this.state.address || geoPosition.address || ''
 
-    console.log("address", address)
-    console.log("tutto", this.props)
     const geoPositionRetrieved = geoPosition.lat && 
       geoPosition.lng && 
       !geoPosition.loading
@@ -60,12 +59,14 @@ class Map extends Component {
     const lat = geoPositionRetrieved ? geoPosition.lat : 40.480709
     const lng = geoPositionRetrieved ? geoPosition.lng : 9.2030196
 
+    console.log("markers", markers)
     return (
       <Container>
 
         <MapContainer>
-          <GoogleMap 
-            center={{ lat, lng }} 
+          <GoogleMap
+            markers={markers}
+            center={{ lat, lng }}
             zoom={geoPositionRetrieved ? 9 : 3}
             showMarker={geoPositionRetrieved}
           />
@@ -98,7 +99,7 @@ class Map extends Component {
                   <Input
                     type="text"
                     label="località"
-                    handleChange={this.handleaddressChange}
+                    handleChange={this.handleAddressChange}
                     value={address}
                   />
                 </FieldWrapper>
@@ -190,6 +191,7 @@ const GeoPositionContainer = styled.div`
 
 const mapStateToProps = (state) => ({
   geoPosition: state.geoPosition,
+  markers: state.markers
 })
 
 

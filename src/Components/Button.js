@@ -25,6 +25,10 @@ const Wrapper = styled.button`
   cursor: pointer;
   background: white;
   transition: .3s all;
+  &:hover{
+    color: ${props => props.theme.colors.main};
+    background: ${props => props.theme.colors.secondary};
+  }
 `
 
 
