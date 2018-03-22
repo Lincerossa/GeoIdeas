@@ -1,5 +1,5 @@
-import { LOGOUT } from '../Actions/logout'
-import { LOGIN } from '../Actions/handleGuestLogin'
+import { LOGOUT } from '../actions/logout'
+import { LOGIN } from '../actions/handleLogin'
 
 
 const initialState = {
@@ -10,7 +10,10 @@ export default (state = initialState, action) => {
   switch (action.type) {
 
     case LOGIN:
-      return action.login
+      return {
+        ...state,
+        ...action.login,
+      }
 
     case LOGOUT:
       return initialState
