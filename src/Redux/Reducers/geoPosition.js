@@ -1,7 +1,7 @@
 import {
-  GET_GEOPOSITION,
-  DENY_GEOPOSITION,
-  LOADING_GEOPOSITION,
+  GEOPOSITION_UPDATE,
+  GEOPOSITION_DENY,
+  GEOPOSITION_LOAD,
 } from '../actions/getGeoPosition'
 
 const initialState = {
@@ -14,7 +14,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
 
-    case GET_GEOPOSITION:
+    case GEOPOSITION_UPDATE:
       return {
         ...state,
         ...action.position,
@@ -22,14 +22,14 @@ export default (state = initialState, action) => {
         error: null,
       }
 
-    case DENY_GEOPOSITION:
+    case GEOPOSITION_DENY:
       return {
         ...state,
         loading: null,
         error: true,
       }
 
-    case LOADING_GEOPOSITION:
+    case GEOPOSITION_LOAD:
       return {
         ...state,
         loading: true,

@@ -1,4 +1,4 @@
-import admin from '../../../firebase'
+import { getDatabaseLoginReference } from '../../utility/getDatabaseReference'
 
 export const LOGIN = 'LOGIN'
 
@@ -13,11 +13,6 @@ const actionUsername = ({ username, isGuest, guestNameAlreadyTaken }) => ({
   }
 })
 
-
-const getDatabaseLoginReference = typeOfUser => {
-  const db = admin.database();
-  return db.ref(`login/${typeOfUser}`)
-}
 
 
 const setUserAsGuest = (username) => {
