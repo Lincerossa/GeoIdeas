@@ -3,9 +3,8 @@ export const GET_GEOPOSITION = 'GET_GEOPOSITION';
 export const DENY_GEOPOSITION = 'DENY_GEOPOSITION';
 export const LOADING_GEOPOSITION = 'LOADING_GEOPOSITION';
 
-const denyGeoPosition = (position) => ({
+const denyGeoPosition = () => ({
   type: DENY_GEOPOSITION,
-  position,
 })
 
 const geoPosition = (position) => ({
@@ -13,35 +12,54 @@ const geoPosition = (position) => ({
   position,
 })
 
-const loadingGeoPosition = (position) => ({
+const loadingGeoPosition = () => ({
   type: LOADING_GEOPOSITION,
-  position,
 })
 
 
 const askForGeoPosition = () => {
-  console.log("prosegue qui")
   return new Promise((resolve, reject) =>
     navigator.geolocation.getCurrentPosition(resolve, reject))
 }
 
-export function getGeoPosition() {
-  console.log("inizia qui")
-  return (dispatch) => {
-    const action = loadingGeoPosition({ lat: null, lng: null, loading: true })
-    dispatch(action)
-    askForGeoPosition()
-      .then((position) => {
-        console.log("nel then")
-        
-        const { coords } = position;
-        const { latitude: lat, longitude: lng } = coords;
-        const action = geoPosition({ lat, lng, err: false, loading: false })
-        dispatch(action)
-      })
+const getAddressFromLatLng = ({ lat, lng }) => {
+  var geocoder = new google.maps.Geocoder()
+  var location = new google.maps.LatLng(lat, lng)
+
+  const promiz = new Promise((resolve, reject) => {
+
+    geocoder.geocode({ 'latLng': location }, (results, status) => {
+      if (status === google.maps.GeocoderStatus.OK) {
+        resolve(results[0].formatted_address)
+      }
+      reject()
+    }, reject)
+  })
+
+  return promiz
+}
+
+
+export const getGeoPosition = () => {
+
+  return async (dispatch) => {
+
+    dispatch(loadingGeoPosition())
+
+    const position = await askForGeoPosition()
       .catch(() => {
-        const action = denyGeoPosition({ lat: null, lng: null, err: true, loading: false })
-        dispatch(action)
+        dispatch(denyGeoPosition())
       })
+
+    if (!position) return
+    
+    const { coords } = position;
+    const { latitude: lat, longitude: lng } = coords;
+
+    const address = await getAddressFromLatLng({ lat, lng })
+
+    dispatch(geoPosition({ lat, lng, address }))
+
   };
+
 }
