@@ -2,15 +2,16 @@ import React, { Component } from 'react'
 import { compose, withProps } from 'recompose'
 import { withGoogleMap, withScriptjs, GoogleMap, Marker } from "react-google-maps"
 
-const Map = ({ center }) => (
+const Map = ({ center, zoom, showMarker }) => {
+
+  return(
   <GoogleMap
-    defaultZoom={8}
+    zoom={zoom}
     center={center}
-    defaultCenter={center}
   >
-    <Marker position={center} />
-  </GoogleMap>
-)
+    {showMarker && <Marker position={center} />}
+  </GoogleMap>)
+}
 
 
 const composedMap = compose(

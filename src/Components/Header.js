@@ -16,7 +16,7 @@ const Header = (props) => (
         Home
       </BackHome>
 
-      <Logo onClick={() => handleRouteChange({ history: props.history, url: '/guestlogin' })}>
+      <Logo onClick={() => handleRouteChange({ history: props.history, url: '/login' })}>
         Login
       </Logo>
     </LoginWrapper>
@@ -25,7 +25,7 @@ const Header = (props) => (
 
 const Container = styled.div`
   height: 60px;
-  border: 1px solid grey;
+  border-bottom:${props => props.theme.colors.secondary};
   margin: 0;
   display: flex;
   position: fixed;
@@ -33,23 +33,25 @@ const Container = styled.div`
   left: 0;
   right: 0;
   z-index: 1;
-  background: lightgray;
+  background: ${props => props.theme.colors.main};
+  color: ${props => props.theme.colors.secondary};
 `
 
 const LoginWrapper = styled.div`
-  border: 1px solid grey;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  padding: 1rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-family: sans-serif;
 `
 const BackHome = styled.div`
-  border: 1px solid yellow;
   cursor: pointer;
 `
 
 const Logo = styled.div`
-  border: 1px solid blue;
   cursor: pointer;
 `
 

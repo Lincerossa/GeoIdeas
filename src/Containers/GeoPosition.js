@@ -2,8 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import * as actions from "../Redux/Actions/getGeoPosition";
-import Loading from '../Components/Loading'
+import * as actions from "../redux/actions/getGeoPosition";
 import Button from '../Components/Button'
 
 const GeoPosition = ({ geoPosition, getGeoPosition, children }) => {
@@ -15,9 +14,7 @@ const GeoPosition = ({ geoPosition, getGeoPosition, children }) => {
       {children({
         getGeoPosition,
       })}
-
       {err && <Err>Hai bloccato la geolocalizzazione</Err>}
-      {loading && <Loading>loading</Loading>}
     </React.Fragment>
   )
 }

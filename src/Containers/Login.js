@@ -1,11 +1,11 @@
 import React,  { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import * as actions from '../Redux/Actions/handleGuestLogin'
+import * as actions from '../redux/actions/handleLogin'
 
 import Input from '../Components/Input'
 
-class GuestLogin extends Component {
+class Login extends Component {
 
   constructor(props) {
     super(props)
@@ -21,12 +21,10 @@ class GuestLogin extends Component {
   handleSubmit(e){
     e.preventDefault()
 
-    const { handleGuestLogin } = this.props
+    const { handleLogin } = this.props
     const { value } = this.state
 
-    if(value) {
-      handleGuestLogin(value)
-    }
+    
 
   }
 
@@ -93,4 +91,4 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   actions,
-)(GuestLogin)
+)(Login)

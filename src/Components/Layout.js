@@ -17,7 +17,6 @@ const Layout = (props) => (
 )
 
 const Container = styled.div`
-  border: 2px solid violet;
   position: relative;
   min-height: 100vh;
 `
