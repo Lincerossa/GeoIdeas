@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
 import GeoPosition from './Containers/GeoPosition'
-import GuestLogin from './Containers/GuestLogin'
+import Login from './Containers/Login'
 import Map from './Containers/Map'
 import Layout from './Components/Layout'
 
@@ -16,7 +16,7 @@ const App = () => (
   <Switch>
     <Route exact path='/' component={withLayout(Map)} />
     <Route path='/geoposition' component={withLayout(GeoPosition)} />
-    <Route path='/guestlogin' component={withLayout(GuestLogin)} />
+    <Route path='/login' component={withLayout(Login)} />
   </Switch>
 )
 
