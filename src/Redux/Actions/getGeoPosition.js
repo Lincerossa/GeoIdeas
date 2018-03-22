@@ -1,19 +1,19 @@
 
-export const GET_GEOPOSITION = 'GET_GEOPOSITION';
-export const DENY_GEOPOSITION = 'DENY_GEOPOSITION';
-export const LOADING_GEOPOSITION = 'LOADING_GEOPOSITION';
+export const GEOPOSITION_UPDATE = 'GEOPOSITION_UPDATE';
+export const GEOPOSITION_DENY = 'GEOPOSITION_DENY';
+export const GEOPOSITION_LOAD = 'GEOPOSITION_LOAD';
 
 const denyGeoPosition = () => ({
-  type: DENY_GEOPOSITION,
+  type: GEOPOSITION_DENY,
 })
 
-const geoPosition = (position) => ({
-  type: GET_GEOPOSITION,
+const updateGeoPosition = (position) => ({
+  type: GEOPOSITION_UPDATE,
   position,
 })
 
 const loadingGeoPosition = () => ({
-  type: LOADING_GEOPOSITION,
+  type: GEOPOSITION_LOAD,
 })
 
 
@@ -58,7 +58,7 @@ export const getGeoPosition = () => {
 
     const address = await getAddressFromLatLng({ lat, lng })
 
-    dispatch(geoPosition({ lat, lng, address }))
+    dispatch(updateGeoPosition({ lat, lng, address }))
 
   };
 
