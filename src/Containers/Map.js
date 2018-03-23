@@ -8,21 +8,23 @@ import GeoPosition from './GeoPosition'
 import Button from '../Components/Button'
 import Loading from '../Components/Loading'
 import ModalOverlay from '../Components/ModalOverlay'
+import Form from '../Components/Form'
 
-import * as actions from "../redux/actions/getGeoPosition";
+
+import * as actions from "../redux/actions/manageMarkers";
 import Input from '../Components/Input'
 
+
+console.log("actios", actions.manageMarkers)
 class Map extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
       showModal: false,
-      address: '',
     }
     this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
-    this.handleAddressChange = this.handleAddressChange.bind(this)
   }
   
 
@@ -32,25 +34,45 @@ class Map extends Component {
     })
   }
 
-  handleFormSubmit(){
-    
-    
+  componentDidMount() {
+    console.log('monta marcello')
+    this.props.manageMarkers()
   }
 
+  handleFormSubmit(e){
+    e.preventDefault()
+    
+    const { form, manageMarkers } = this.props
+    const { lat, lng } = this.props.geoPosition
 
-  handleAddressChange(value) {
-    this.setState({
-      address: value
-    })
+    if (
+      form.markerGenerator &&
+      form.markerGenerator.values &&
+      form.markerGenerator.values.address &&
+      form.markerGenerator.values.description &&
+      form.markerGenerator.values.category &&
+      lat && lng
+    ) {
+
+      const { address, category, description } = form.markerGenerator.values
+      
+      const markerObject = {
+        lat,
+        lng,
+        address,
+        category,
+        description,
+      }
+      console.log("markerObject", markerObject)
+      manageMarkers(markerObject)
+    }
   }
-
 
   render() {
-
     const { showModal, } = this.state
     const { geoPosition, markers } = this.props
 
-    const address = this.state.address || geoPosition.address || ''
+    const address = geoPosition.address || ''
 
     const geoPositionRetrieved = geoPosition.lat && 
       geoPosition.lng && 
@@ -59,7 +81,6 @@ class Map extends Component {
     const lat = geoPositionRetrieved ? geoPosition.lat : 40.480709
     const lng = geoPositionRetrieved ? geoPosition.lng : 9.2030196
 
-    console.log("markers", markers)
     return (
       <Container>
 
@@ -93,18 +114,31 @@ class Map extends Component {
             <OverlayHeader>Sezione inserimento</OverlayHeader>
 
             <FormContainer>
-              <Form onSubmit={this.handleFormSubmit}>
-
-                <FieldWrapper>
-                  <Input
-                    type="text"
-                    label="località"
-                    handleChange={this.handleAddressChange}
-                    value={address}
-                  />
-                </FieldWrapper>
-
-              </Form>
+              <Form
+                handleSubmit={this.handleFormSubmit}
+                fields = {[
+                  {
+                    name: 'address',
+                    component:'input',
+                    value: geoPosition.address,
+                    type:'text',
+                    label:'localita'
+                  },
+                  {
+                    name: 'category',
+                    component: 'input',
+                    type: 'text',
+                    label: 'categoria'
+                  },
+                  {
+                    name: 'description',
+                    component: 'input',
+                    type: 'text',
+                    label: 'descrizione'
+                  },
+                ]}
+              />
+          
             </FormContainer>
             
           </ModalOverlay>
@@ -124,8 +158,7 @@ const FormContainer = styled.div`
   margin: 1rem 0;
 `
 
-const Form = styled.form`
-`
+
 
 const FieldWrapper = styled.div`
   border-bottom: 1px solid grey;
@@ -191,7 +224,8 @@ const GeoPositionContainer = styled.div`
 
 const mapStateToProps = (state) => ({
   geoPosition: state.geoPosition,
-  markers: state.markers
+  markers: state.markers,
+  form: state.form,
 })
 
 
