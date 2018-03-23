@@ -6,6 +6,8 @@ export const getDatabaseMarkersReference = () => {
   return db.ref(`markers/`)
 }
 
+export const removePoint = number => number.replace(/\D+/g, '')
+
 
 export const getDatabaseLoginReference = typeOfUser => {
   const db = admin.database();
