@@ -1,40 +1,22 @@
-import { MARKERS_UPDATE } from '../actions/getMarkers'
+import { MARKERS_ADD, MARKERS_RETRIEVE } from '../actions/manageMarkers'
 
-const initialState = [
-  {
-    lat: 45,
-    lng: 55,
-    category: 'traffico',
-    emoji: ['😃', '😱'],
-    description: 'semaforo rotto',
-    
-  },
-  {
-    lat: 44,
-    lng: 55,
-    category: 'traffico',
-    emoji: ['😡', '😱'],
-    description: 'semaforo brutto',
-  },
-  {
-    lat: 33,
-    lng: 55,
-    category: 'traffico',
-    emoji: ['😡', '😱'],
-    description: 'strada rotta',
-  },
-]
-
+const initialState = []
 
 export default (state = initialState, action) => {
 
 
   switch (action.type) {
 
-    case MARKERS_UPDATE:
+    case MARKERS_RETRIEVE:
       return [
         ...state,
-        ...action.markes,
+        ...action.markers
+      ]
+
+    case MARKERS_ADD:
+      return [
+        ...state,
+        ...action.marker,
       ]
 
     default:
