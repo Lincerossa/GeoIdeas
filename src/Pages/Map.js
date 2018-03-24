@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import Button from '../Components/Button'
-import ModalOverlay from '../Components/ModalOverlay'
-import FormMarker from '../Containers/FormMarker'
-import MapContainer from '../Containers/MapContainer'
-
+import { Button, ModalOverlay} from '../Components'
+import { FormMarker, MapContainer } from '../Containers'
 
 class Map extends Component {
 
@@ -14,11 +11,11 @@ class Map extends Component {
     this.state = {
       showModal: false,
     }
-    this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
+    this.handleToggleModal = this.handleToggleModal.bind(this)
   }
 
 
-  handleToggleSidebar() {
+  handleToggleModal() {
     this.setState({
       showModal: !this.state.showModal,
     })
@@ -35,12 +32,12 @@ class Map extends Component {
 
         <ButtonWrapper>
           <Button
-            onClick={this.handleToggleSidebar}
+            onClick={this.handleToggleModal}
           >Inserisci un nuovo commento</Button>
         </ButtonWrapper>
 
         {
-          <ModalOverlay showModal={showModal} closeModal={this.handleToggleSidebar} >
+          <ModalOverlay showModal={showModal} closeModal={this.handleToggleModal} >
 
             <OverlayHeader>Sezione inserimento</OverlayHeader>
 

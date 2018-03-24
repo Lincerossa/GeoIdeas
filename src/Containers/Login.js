@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import * as actions from '../redux/actions/handleLogin'
 
-import Input from '../Components/Input'
+import { Input } from '../Components'
 
 class Login extends Component {
 

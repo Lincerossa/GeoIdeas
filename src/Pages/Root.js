@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import Loading from '../Components/Loading'
+import {Loading} from '../Components'
 
 import * as actions from "../redux/actions/getGeoPosition";
 
@@ -24,6 +24,9 @@ class Root extends Component {
   render() {
     const { geoPosition } = this.props
 
+    // da rimuovere
+    geoPosition.lat = 12
+    geoPosition.lng = 12
 
     if (geoPosition.lat && geoPosition.lng) {
       this.props.history.push('/map');

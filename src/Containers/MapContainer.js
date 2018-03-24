@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import GoogleMap from '../Components/GoogleMap'
+import { GoogleMap } from '../Components'
 
-import * as actions from "../redux/actions/manageMarkers";
+import * as actions from '../redux/actions/manageMarkers';
 
 class MapContainer extends Component {
 
@@ -27,7 +27,7 @@ class MapContainer extends Component {
       lng,
       loading
     } = geoPosition
-    console.log("cazzzooo")
+    
     return (
       <Wrapper>
         <GoogleMap
