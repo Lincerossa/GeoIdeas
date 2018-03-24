@@ -3,16 +3,16 @@ import styled from 'styled-components'
 import { Switch, Route } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
-import GeoPosition from './Containers/GeoPosition'
-import Login from './Containers/Login'
-import Map from './Containers/Map'
-import Layout from './Components/Layout'
+import GeoPosition from '../Containers/GeoPosition'
+import Login from '../Containers/Login'
+import Map from '../Containers/Map'
+import Layout from '../Components/Layout'
 
 
-import withLayout from './hoc/withLayout'
+import withLayout from '../hoc/withLayout'
 
 
-const App = () => (
+const Pages = () => (
   <Switch>
     <Route exact path='/' component={withLayout(Map)} />
     <Route path='/geoposition' component={withLayout(GeoPosition)} />
@@ -22,4 +22,4 @@ const App = () => (
 
 
 
-export default withRouter(App)
+export default withRouter(Pages)

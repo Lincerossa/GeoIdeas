@@ -1,4 +1,4 @@
-import { getDatabaseLoginReference } from '../../utility/getDatabaseReference'
+import { getDatabaseReference } from '../../utility'
 
 export const LOGIN = 'LOGIN'
 
@@ -16,7 +16,7 @@ const actionUsername = ({ username, isGuest, guestNameAlreadyTaken }) => ({
 
 
 const setUserAsGuest = (username) => {
-  const users = getDatabaseLoginReference('guests');
+  const users = getDatabaseReference('login/guests');
   users.update({
     [username]: '',
   })
@@ -30,7 +30,7 @@ const findElementInObjectList = (obj,elementToFind) => (
 
 export function handleLogin(username) {
   return (dispatch) => {
-    getDatabaseLoginReference('users')
+    getDatabaseReference('login/users')
       .on('value', (snapshot) => {
        
         const users = snapshot.val()
@@ -42,7 +42,7 @@ export function handleLogin(username) {
           return false
         }
 
-        getDatabaseLoginReference('guests')
+        getDatabaseReference('login/guests')
           .on('value', (snapshot) => {
 
             const guests = snapshot.val()
