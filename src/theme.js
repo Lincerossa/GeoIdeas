@@ -1,7 +1,8 @@
 const theme = {
   colors: {
-    main: 'black',
+    main: 'lightpink',
     secondary: 'orange',
+    third: 'lightblue'
   }
 }
 

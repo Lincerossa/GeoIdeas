@@ -17,10 +17,8 @@ const loadingGeoPosition = () => ({
 })
 
 
-const askForGeoPosition = () => {
-  return new Promise((resolve, reject) =>
-    navigator.geolocation.getCurrentPosition(resolve, reject))
-}
+const askForGeoPosition = new Promise((resolve, reject) =>
+  navigator.geolocation.getCurrentPosition(resolve, reject))
 
 const getAddressFromLatLng = ({ lat, lng }) => {
   var geocoder = new google.maps.Geocoder()
@@ -45,17 +43,16 @@ export const getGeoPosition = () => {
   return async (dispatch) => {
 
     dispatch(loadingGeoPosition())
-
-    const position = await askForGeoPosition()
+    const position = await askForGeoPosition
       .catch(() => {
         dispatch(denyGeoPosition())
       })
-
     if (!position) return
-    
     const { coords } = position;
     const { latitude: lat, longitude: lng } = coords;
 
+    console.log("lat", lat)
+    console.log("lng", lng)
     const address = await getAddressFromLatLng({ lat, lng })
 
     dispatch(updateGeoPosition({ lat, lng, address }))

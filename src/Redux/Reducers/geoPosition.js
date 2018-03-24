@@ -5,10 +5,10 @@ import {
 } from '../actions/getGeoPosition'
 
 const initialState = {
-  lat: 46.1472553,
-  lng: 9.3000811,
-  loading: '',
-  address: false,
+  lat: null,
+  lng: null,
+  loading: null,
+  address: null,
   error: null,
 }
 

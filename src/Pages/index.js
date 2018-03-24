@@ -5,16 +5,17 @@ import { withRouter } from 'react-router-dom'
 
 import GeoPosition from '../Containers/GeoPosition'
 import Login from '../Containers/Login'
-import Map from '../Containers/Map'
-import Layout from '../Components/Layout'
 
+import Root from './Root'
+import Map from './Map'
 
 import withLayout from '../hoc/withLayout'
 
 
 const Pages = () => (
   <Switch>
-    <Route exact path='/' component={withLayout(Map)} />
+    <Route exact path='/' component={Root} />
+    <Route exact path='/map' component={withLayout(Map)} />
     <Route path='/geoposition' component={withLayout(GeoPosition)} />
     <Route path='/login' component={withLayout(Login)} />
   </Switch>
