@@ -8,14 +8,13 @@ import GeoPosition from './GeoPosition'
 import Button from '../Components/Button'
 import Loading from '../Components/Loading'
 import ModalOverlay from '../Components/ModalOverlay'
-import Form from '../Components/Form'
+import Form from './Form'
 
 
 import * as actions from "../redux/actions/manageMarkers";
 import Input from '../Components/Input'
 
 
-console.log("actios", actions.manageMarkers)
 class Map extends Component {
 
   constructor(props) {
@@ -24,7 +23,7 @@ class Map extends Component {
       showModal: false,
     }
     this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
-    this.handleFormSubmit = this.handleFormSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   
 
@@ -39,31 +38,37 @@ class Map extends Component {
     this.props.manageMarkers()
   }
 
-  handleFormSubmit(e){
+  handleSubmit({
+    e,
+    address,
+    lat,
+    lng,
+    loading,
+  }){
     e.preventDefault()
     
     const { form, manageMarkers } = this.props
-    const { lat, lng } = this.props.geoPosition
+    
 
     if (
       form.markerGenerator &&
       form.markerGenerator.values &&
-      form.markerGenerator.values.address &&
       form.markerGenerator.values.description &&
-      form.markerGenerator.values.category &&
-      lat && lng
+      form.markerGenerator.values.category && 
+      (address || form.markerGenerator.values.address)
     ) {
-
-      const { address, category, description } = form.markerGenerator.values
       
+      const { category, description } = form.markerGenerator.values
+  
       const markerObject = {
         lat,
         lng,
-        address,
+        address: form.markerGenerator.values.address || address,
         category,
         description,
       }
-      console.log("markerObject", markerObject)
+
+      console.log("eccolo", markerObject )
       manageMarkers(markerObject)
     }
   }
@@ -72,15 +77,14 @@ class Map extends Component {
     const { showModal, } = this.state
     const { geoPosition, markers } = this.props
 
-    const address = geoPosition.address || ''
+    const { 
+      address,
+      lat,
+      lng,
+      loading
+    } = geoPosition
 
-    const geoPositionRetrieved = geoPosition.lat && 
-      geoPosition.lng && 
-      !geoPosition.loading
-
-    const lat = geoPositionRetrieved ? geoPosition.lat : 40.480709
-    const lng = geoPositionRetrieved ? geoPosition.lng : 9.2030196
-
+    console.log("aa", geoPosition)
     return (
       <Container>
 
@@ -88,8 +92,8 @@ class Map extends Component {
           <GoogleMap
             markers={markers}
             center={{ lat, lng }}
-            zoom={geoPositionRetrieved ? 9 : 3}
-            showMarker={geoPositionRetrieved}
+            zoom={!loading ? 9 : 3}
+            showMarker={!loading}
           />
           <GeoPositionContainer>
             <GeoPosition>
@@ -115,12 +119,17 @@ class Map extends Component {
 
             <FormContainer>
               <Form
-                handleSubmit={this.handleFormSubmit}
+                handleSubmit={(e)=>this.handleSubmit({
+                  e,
+                  address,
+                  lat,
+                  lng,
+                  loading,
+                })}
                 fields = {[
                   {
                     name: 'address',
                     component:'input',
-                    value: geoPosition.address,
                     type:'text',
                     label:'localita'
                   },
