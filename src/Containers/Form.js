@@ -1,15 +1,18 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
+
+
+
 let Form = ({ handleSubmit, fields}) => {
   return (
     <form onSubmit={handleSubmit}>
       {
         fields &&
-        fields.map(({name, label, component="input", type="text", value}) => (
+        fields.map(({name, label, component="input", type="text", value, placeholder}) => (
           <div>
             <label htmlFor={name}>{label}</label>
-            <Field name={name} component={component} type={type} value={value}/>
+            <Field name={name} component={component} type={type} placeholder={placeholder} value={value}/>
           </div>
         ))
       }

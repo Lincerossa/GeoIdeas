@@ -129,18 +129,21 @@ class Map extends Component {
                 fields = {[
                   {
                     name: 'address',
+                    placeholder: 'via volta 55, Gravedona ed Uniti(CO)',
                     component:'input',
                     type:'text',
                     label:'localita'
                   },
                   {
                     name: 'category',
+                    placeholder: 'segnaletica stradale',
                     component: 'input',
                     type: 'text',
                     label: 'categoria'
                   },
                   {
                     name: 'description',
+                    placeholder: 'semaforo rotto',
                     component: 'input',
                     type: 'text',
                     label: 'descrizione'
