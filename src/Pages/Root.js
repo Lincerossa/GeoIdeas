@@ -24,8 +24,6 @@ class Root extends Component {
   render() {
     const { geoPosition } = this.props
 
-    geoPosition.lat = 33
-    geoPosition.lng = 44
 
     if (geoPosition.lat && geoPosition.lng) {
       this.props.history.push('/map');

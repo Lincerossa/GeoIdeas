@@ -2,7 +2,7 @@ import React from 'react'
 import { Field } from 'redux-form'
 
 const Form = ({ handleSubmit, fields }) => {
-
+  console.log("this priops", handleSubmit)
   return (
     <form onSubmit={handleSubmit}>
       {

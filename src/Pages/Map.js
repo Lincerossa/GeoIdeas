@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { connect } from 'react-redux'
 
 import Button from '../Components/Button'
-import Loading from '../Components/Loading'
 import ModalOverlay from '../Components/ModalOverlay'
 import FormMarker from '../Containers/FormMarker'
 import MapContainer from '../Containers/MapContainer'
-
-import * as actions from "../redux/actions/manageMarkers";
-import Input from '../Components/Input'
 
 
 class Map extends Component {
@@ -20,7 +15,6 @@ class Map extends Component {
       showModal: false,
     }
     this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
 
@@ -30,46 +24,9 @@ class Map extends Component {
     })
   }
 
-  componentDidMount() {
-    this.props.manageMarkers()
-  }
-
-  handleSubmit({
-    e,
-    address,
-    lat,
-    lng,
-    loading,
-  }) {
-    e.preventDefault()
-
-    const { form, manageMarkers } = this.props
-
-
-    if (
-      form.markerGenerator &&
-      form.markerGenerator.values &&
-      form.markerGenerator.values.description &&
-      form.markerGenerator.values.category &&
-      (address || form.markerGenerator.values.address)
-    ) {
-
-      const { category, description } = form.markerGenerator.values
-
-      const markerObject = {
-        lat,
-        lng,
-        address: form.markerGenerator.values.address || address,
-        category,
-        description,
-      }
-
-      manageMarkers(markerObject)
-    }
-  }
 
   render() {
-    const { showModal, } = this.state
+    const { showModal } = this.state
 
     return (
       <Container>
@@ -88,38 +45,7 @@ class Map extends Component {
             <OverlayHeader>Sezione inserimento</OverlayHeader>
 
             <FormContainer>
-              <FormMarker
-                handleSubmit={(e) => this.handleSubmit({
-                  e,
-                  address,
-                  lat,
-                  lng,
-                  loading,
-                })}
-                fields={[
-                  {
-                    name: 'address',
-                    placeholder: 'via volta 55, Gravedona ed Uniti(CO)',
-                    component: 'input',
-                    type: 'text',
-                    label: 'localita'
-                  },
-                  {
-                    name: 'category',
-                    placeholder: 'segnaletica stradale',
-                    component: 'input',
-                    type: 'text',
-                    label: 'categoria'
-                  },
-                  {
-                    name: 'description',
-                    placeholder: 'semaforo rotto',
-                    component: 'input',
-                    type: 'text',
-                    label: 'descrizione'
-                  },
-                ]}
-              />
+              <FormMarker />
 
             </FormContainer>
 
@@ -174,15 +100,5 @@ const OverlayHeader = styled.div`
   letter-spacing: .1em;
 `
 
-const mapStateToProps = (state) => ({
-  geoPosition: state.geoPosition,
-  markers: state.markers,
-  form: state.form,
-})
 
-
-
-export default connect(
-  mapStateToProps,
-  actions,
-)(Map)
+export default Map

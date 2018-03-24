@@ -49,7 +49,7 @@ class Map extends Component {
           <MarkerClusterer
             averageCenter
             enableRetinaIcons
-            gridSize={60}
+            gridSize={2}
           >
             {
               markers.map((marker, index) => (

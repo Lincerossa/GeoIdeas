@@ -27,7 +27,7 @@ class MapContainer extends Component {
       lng,
       loading
     } = geoPosition
-    console.log("ooooook")
+    console.log("cazzzooo")
     return (
       <Wrapper>
         <GoogleMap
