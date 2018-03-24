@@ -1,49 +1,36 @@
 
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import {Loading} from '../Components'
+import { Loading } from '../Components'
 
 import * as actions from "../redux/actions/getGeoPosition";
 
-
-
-class Root extends Component {
-
-  constructor(props) {
-    super(props)
-    this.handleBeginClick = this.handleBeginClick.bind(this)
-  }
-
-
-  handleBeginClick() {
-    const { getGeoPosition } = this.props
-    getGeoPosition()
-  }
-
-  render() {
-    const { geoPosition } = this.props
-
-    // da rimuovere
-    geoPosition.lat = 12
-    geoPosition.lng = 12
-
-    if (geoPosition.lat && geoPosition.lng) {
-      this.props.history.push('/map');
-    }
-
-    return (
-      <Container>
-        { geoPosition.loading && <Loading /> }
-        <IconContainer onClick={this.handleBeginClick}>
-          <div className="material-icons">location_searching</div>
-        </IconContainer>
-
-      </Container>
-    )
-  }
-
+const handleBeginClick = (getGeoPosition) => {
+  getGeoPosition()
 }
+
+const Root = ({ geoPosition, history }) => {
+
+  geoPosition.lat = 12
+  geoPosition.lng = 32
+
+  if (geoPosition.lat && geoPosition.lng) {
+    history.push('/map');
+  }
+
+  return(
+
+    <Container>
+      {geoPosition.loading && <Loading />}
+      <IconContainer onClick={handleBeginClick}>
+        <div className="material-icons">location_searching</div>
+      </IconContainer>
+
+    </Container>
+  )
+}
+   
 
 const Container = styled.div`
   height: 100vh;

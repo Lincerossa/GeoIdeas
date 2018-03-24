@@ -1,22 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { withRouter } from 'react-router-dom'
-
 const handleRouteChange = ({ history, url }) => {
   history.push(url)
 }
 
 
-const Header = (props) => (
+const Header = ({history}) => (
   <Container>
     <LoginWrapper>
 
-      <BackHome onClick={() => handleRouteChange({ history: props.history, url: '/' })}>
+      <BackHome 
+        onClick={() => handleRouteChange({ history, url: '/' })}
+      >
         Home
       </BackHome>
 
-      <Logo onClick={() => handleRouteChange({ history: props.history, url: '/login' })}>
+      <Logo 
+        onClick={() => handleRouteChange({ history, url: '/login' })}
+      >
         Login
       </Logo>
     </LoginWrapper>
@@ -56,4 +58,4 @@ const Logo = styled.div`
 `
 
 
-export default withRouter(Header)
+export default Header

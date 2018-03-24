@@ -5,10 +5,10 @@ import { Header } from '../Components'
 
 const withLayout = WrappedComponents => props => (
   <Container>
-    <Header />
+    <Header {...props} />
       <Content>
-      <WrappedComponents {...props} />
-    </Content>
+        <WrappedComponents {...props} />
+      </Content>
   </Container>
 )
 
