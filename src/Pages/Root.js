@@ -34,9 +34,9 @@ class Root extends Component {
     return (
       <Container>
         { geoPosition.loading && <Loading /> }
-        <BeginContainer onClick={this.handleBeginClick}>
+        <IconContainer onClick={this.handleBeginClick}>
           <div className="material-icons">location_searching</div>
-        </BeginContainer>
+        </IconContainer>
 
       </Container>
     )
@@ -54,7 +54,7 @@ const Container = styled.div`
   justify-content: center;
 `
 
-const BeginContainer= styled.div`
+const IconContainer= styled.div`
   border-radius: 50%;
   border: 1px solid ${ props => props.theme.colors.main};
   color:  ${ props => props.theme.colors.main};

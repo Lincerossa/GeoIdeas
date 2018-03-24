@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import GoogleMap from '../Components/GoogleMap'
-
 import Button from '../Components/Button'
 import Loading from '../Components/Loading'
 import ModalOverlay from '../Components/ModalOverlay'
-import Form from '../Containers/Form'
-
+import FormMarker from '../Containers/FormMarker'
+import MapContainer from '../Containers/MapContainer'
 
 import * as actions from "../redux/actions/manageMarkers";
 import Input from '../Components/Input'
@@ -72,40 +70,25 @@ class Map extends Component {
 
   render() {
     const { showModal, } = this.state
-    const { geoPosition, markers } = this.props
-
-    const {
-      address,
-      lat,
-      lng,
-      loading
-    } = geoPosition
 
     return (
       <Container>
 
-        <MapContainer>
-          <GoogleMap
-            markers={markers}
-            center={{ lat, lng }}
-            zoom={!loading ? 9 : 2}
-            showMarker={!loading}
-          />
+        <MapContainer />
 
-        </MapContainer>
-
-        <ButtonContainer>
+        <ButtonWrapper>
           <Button
             onClick={this.handleToggleSidebar}
           >Inserisci un nuovo commento</Button>
-        </ButtonContainer>
+        </ButtonWrapper>
 
         {
           <ModalOverlay showModal={showModal} closeModal={this.handleToggleSidebar} >
+
             <OverlayHeader>Sezione inserimento</OverlayHeader>
 
             <FormContainer>
-              <Form
+              <FormMarker
                 handleSubmit={(e) => this.handleSubmit({
                   e,
                   address,
@@ -171,7 +154,7 @@ const IconWrapper = styled.div`
   cursor: pointer;
 `
 
-const ButtonContainer = styled.div`
+const ButtonWrapper = styled.div`
   background: black;
   padding: 0 3rem;
   bottom: 0;
@@ -190,13 +173,6 @@ const OverlayHeader = styled.div`
   text-transform: uppercase;
   letter-spacing: .1em;
 `
-
-const MapContainer = styled.div`
-  width: 100%;
-  position: relative;
-  height: calc(100vh - 60px - 120px);
-`
-
 
 const mapStateToProps = (state) => ({
   geoPosition: state.geoPosition,
