@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Modal from 'react-modal';
 import styled from 'styled-components'
-import Button from './Button'
 
 const modalStyle = {
   position: 'fixed',
@@ -48,43 +47,23 @@ const backdropStyle = {
 }
 
 
-class ModalOverlay extends Component {
-  
-  constructor(props){
-    super(props)
-    this.state={
-      centerModal: null
-    }
-  }
-  
-
-  render(){
-    
-    const { centerModal } = this.state
-    const { showModal, closeModal, children, contentLabel } = this.props
-
-    return(
-
-      <Modal
-        isOpen={showModal}
-        onRequestClose={closeModal}
-        style={modalStyle}
-        backdropStyle={backdropStyle}
-        contentLabel={contentLabel}
-      >
-        <ModalContent
-          centerModal={centerModal}
-        >
-          {children}
-        </ModalContent>
-        <BackWrapper onClick={closeModal}>
-          <div className="material-icons">navigate_before</div>
-          Torna indietro
-        </BackWrapper>
-      </Modal>
-    )
-  }
-}
+const ModalOverlay = ({ showModal, closeModal, children, contentLabel }) => (
+  <Modal
+    isOpen={showModal}
+    onRequestClose={closeModal}
+    style={modalStyle}
+    backdropStyle={backdropStyle}
+    contentLabel={contentLabel}
+  >
+    <ModalContent>
+      {children}
+    </ModalContent>
+    <BackWrapper onClick={closeModal}>
+      <div className="material-icons">navigate_before</div>
+      Torna indietro
+    </BackWrapper>
+  </Modal>
+)
 
 
 const ModalContent = styled.div`
