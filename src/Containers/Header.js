@@ -39,6 +39,7 @@ const Container = styled.div`
   display: flex;
   position: fixed;
   justify-content: space-between;
+  align-items: center;
   top: 0;
   left: 0;
   right: 0;
@@ -48,10 +49,11 @@ const Container = styled.div`
 `
 
 const Wrapper = styled.div``
+
 const Icon = styled.div`
   cursor: pointer;
   font-size: 2.25rem;
-  padding: 0 .5rem;
+  padding: 0 .5rem;  
 `
 
 const mapStateToProps = (state) => ({

@@ -7,8 +7,11 @@ import FormMarker from './FormMarker'
 import { Sidebar } from '../Components'
 
 const MapSidebar = ({ sidebar, toggleSidebar }) => (
-  <Sidebar isActive={sidebar && sidebar == 'bookmark'} onClick={toggleSidebar}>
-    <SidebarHeader>Sezione inserimento</SidebarHeader>
+  <Sidebar 
+    isActive={sidebar && sidebar == 'bookmark'} 
+    onClick={toggleSidebar}
+    header="sezione inserimento"
+  >
     <FormContainer>
       <FormMarker />
     </FormContainer>
@@ -18,15 +21,6 @@ const MapSidebar = ({ sidebar, toggleSidebar }) => (
 
 
 const FormContainer = styled.div`
-  border: 1px solid ${props => props.theme.colors.secondary};
-`
-
-const SidebarHeader = styled.div`
-  font-size: 1rem;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  margin-bottom: 1rem;
 `
 
 
