@@ -3,8 +3,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Button = ({ onClick, children }) => (
-  <Wrapper onClick={onClick}>
+const Button = ({ onClick, children, type, small }) => (
+  <Wrapper 
+    small={small}
+    type={type}
+    onClick={onClick}
+  >
     { children }
   </Wrapper>
 )
@@ -15,8 +19,8 @@ const Wrapper = styled.button`
   outline: none;
   -webkit-appearance: none;
   border: none;
-  font-size: 1rem;
-  padding: 1rem;
+  font-size: ${props => props.small ? '.75rem' : '1rem'};
+  padding: ${props => props.small ? '.5rem' : '1rem'};
   margin: 0;
   line-height: 1;
   text-transform: uppercase;

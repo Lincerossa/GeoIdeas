@@ -2,7 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { Loading } from '../Components'
+import { Loading, Button } from '../Components'
 
 import * as actions from "../redux/actions/getGeoPosition";
 
@@ -10,11 +10,12 @@ const handleBeginClick = (getGeoPosition) => {
   getGeoPosition()
 }
 
-const Root = ({ geoPosition, history }) => {
+const Root = ({ geoPosition, history, getGeoPosition }) => {
+
 
   geoPosition.lat = 12
   geoPosition.lng = 32
-
+  
   if (geoPosition.lat && geoPosition.lng) {
     history.push('/map');
   }
@@ -23,9 +24,9 @@ const Root = ({ geoPosition, history }) => {
 
     <Container>
       {geoPosition.loading && <Loading />}
-      <IconContainer onClick={handleBeginClick}>
-        <div className="material-icons">location_searching</div>
-      </IconContainer>
+      <Button onClick={() => handleBeginClick(getGeoPosition)}>
+        Geolocalizzami
+      </Button>
 
     </Container>
   )
@@ -41,47 +42,6 @@ const Container = styled.div`
   background: ${ props => props.theme.colors.third};
   justify-content: center;
 `
-
-const IconContainer= styled.div`
-  border-radius: 50%;
-  border: 1px solid ${ props => props.theme.colors.main};
-  color:  ${ props => props.theme.colors.main};
-  background-color:  ${ props => props.theme.colors.secondary};
-  cursor: pointer;
-  transition: .3s all;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem;
-  &:hover{
-    border: 1px solid ${ props => props.theme.colors.secondary};
-    color:  ${ props => props.theme.colors.secondary};
-    background-color:  ${ props => props.theme.colors.main};
-    animation: pulsate .8s ease-out;
-    animation-iteration-count: infinite;
-  }
-
-
-
-  @keyframes pulsate {
-    0% {
-      transform: scale(1);
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-    100% {
-      transform: scale(1.3);
-      opacity: 0;
-    }
-  }
-
-  .material-icons{
-    font-size: 50px
-  }
-`
-
 
 const mapStateToProps = (state) => ({
   geoPosition: state.geoPosition,
