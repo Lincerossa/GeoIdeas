@@ -1,8 +1,8 @@
 const theme = {
   colors: {
-    main: 'lightpink',
+    main: '#333',
     secondary: 'orange',
-    third: 'lightblue'
+    third: 'lightblue',
   }
 }
 

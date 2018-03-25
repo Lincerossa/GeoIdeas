@@ -10,8 +10,7 @@ class MapContainer extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-    }
+    this.state = {}
   }
 
   componentDidMount() {
@@ -29,29 +28,19 @@ class MapContainer extends Component {
     } = geoPosition
     
     return (
-      <Wrapper>
-        <GoogleMap
-          markers={markers}
-          center={{ lat, lng }}
-          zoom={!loading ? 9 : 2}
-          showMarker={!loading}
-        />
-      </Wrapper>
+      <GoogleMap
+        markers={markers}
+        center={{ lat, lng }}
+        zoom={!loading ? 9 : 2}
+        showMarker={!loading}
+      />
     )
   }
 }
 
-
-const Wrapper = styled.div`
-  width: 100%;
-  position: relative;
-  height: calc(100vh - 60px - 120px);
-`
-
 const mapStateToProps = (state) => ({
   geoPosition: state.geoPosition,
   markers: state.markers,
-  form: state.form,
 })
 
 
