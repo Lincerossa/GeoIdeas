@@ -7,7 +7,7 @@ const Sidebar = ({ header, children, isActive, onClick }) => (
     <Header>
       {header}
       <Icon
-        onClick={onClick}
+        onClick={()=>onClick(null)}
         className="material-icons"
       >navigate_before</Icon>
     </Header>

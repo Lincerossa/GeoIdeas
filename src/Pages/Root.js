@@ -13,9 +13,6 @@ const handleBeginClick = (getGeoPosition) => {
 const Root = ({ geoPosition, history, getGeoPosition }) => {
 
 
-  geoPosition.lat = 12
-  geoPosition.lng = 32
-  
   if (geoPosition.lat && geoPosition.lng) {
     history.push('/map');
   }
